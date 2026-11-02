@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class SliderScript : MonoBehaviour
 {
-
     [SerializeField] Slider _mySlider;
     private void OnVolumeSliderChanged(float value)
     {
@@ -12,7 +11,6 @@ public class SliderScript : MonoBehaviour
 
     private void Awake()
     {
-
         if (_mySlider != null)
         {
             _mySlider.value = Saves.ChangeSound(); 

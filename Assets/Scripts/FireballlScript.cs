@@ -8,7 +8,6 @@ public class FireballScript : MonoBehaviour
 
     private float _speed = 10;
 
-
     private void Start()
     {
 

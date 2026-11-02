@@ -7,7 +7,6 @@ public class PlayerPhys : MonoBehaviour
     private PlayerControls _controls;
     private bool _isDying = false;
 
-
     private IEnumerator RespawnRoutine()
     {
         _isDying = true;
@@ -28,6 +27,7 @@ public class PlayerPhys : MonoBehaviour
         _controls.RgBody.simulated = true;
         _isDying = false;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 

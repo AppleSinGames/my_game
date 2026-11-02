@@ -62,11 +62,10 @@ public class UiControl : MonoBehaviour
         { 
             Instance = this;
         }
-
     }
+
     void Start()
     {
-
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 0f;
@@ -87,9 +86,9 @@ public class UiControl : MonoBehaviour
         }
 
     }
+
     void Update()
     {
-
         if (ScoreText != null)
         {
             ScoreText.text = Score.ToString();
