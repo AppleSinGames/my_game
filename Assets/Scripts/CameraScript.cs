@@ -5,7 +5,6 @@ public class CameraScript : MonoBehaviour
     [SerializeField] Transform Camera;
     [SerializeField] Transform McPos;
 
-
     private void LateUpdate()
     {
         if (McPos != null)
