@@ -70,6 +70,7 @@ public class UiControl : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
+
         else 
         {
             PausePanel.SetActive(false);
@@ -84,7 +85,6 @@ public class UiControl : MonoBehaviour
                 _highScoreText.text = _highScore.ToString();
             }
         }
-
     }
 
     void Update()

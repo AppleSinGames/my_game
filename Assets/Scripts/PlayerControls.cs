@@ -13,13 +13,14 @@ public class PlayerControls : MonoBehaviour
     public float HorizontalInput    { get; set; }
     public float LockMove           { get; set; }
     public float LockFire           { get; set; }
-    public float FireBallPos        { get; set; } = 0.35f;
+    public float FireBallPos        { get; set; } = 1f;
+    public float CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
     
     public int Health               { get; set; } = 1;
     public float FireCd             { get; set; } = 1.5f;
-    public int Speed                { get; set; } = 3;
-    public int JumpForce            { get; set; } = 7;
+    public int Speed                { get; set; } = 6;
+    public int JumpForce            { get; set; } = 10;
     public bool JumpAvailable       { get; set; } = false;
     public Vector2 SpawnPoint       { get; set; } = new(-6.5f, -1.5f);
 
@@ -48,7 +49,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (value.isPressed && LockFire <= 0)
         {
-            Instantiate(FireballPrefab, new Vector2(Pos.position.x + FireBallPos, Pos.position.y), Quaternion.identity);
+            Instantiate(FireballPrefab, new Vector2(Pos.position.x + CurrentFireBallPos, Pos.position.y), Quaternion.identity);
             LockFire = FireCd;
             AudioManager.Instance.PlayFireball();
             PlayerUi.Instance.StartCD();
@@ -58,6 +59,7 @@ public class PlayerControls : MonoBehaviour
     private void Start()
     {
         PlayerFlipped = false;
+        CurrentFireBallPos = FireBallPos;
     }
 
     private void Update()
@@ -66,14 +68,14 @@ public class PlayerControls : MonoBehaviour
         {
             SpriteRenderer.flipX = true;
             PlayerFlipped = true;
-            FireBallPos = -0.35f;
+            CurrentFireBallPos = -1 * FireBallPos;
         }
 
         if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
             PlayerFlipped = false;
-            FireBallPos = 0.35f;
+            CurrentFireBallPos = FireBallPos;
         }
 
         if (Health <= 0)

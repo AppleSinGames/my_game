@@ -10,7 +10,6 @@ public class Enemy_script : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.CompareTag("Fireball"))
         {
             _lockMove = 0.5f;

@@ -6,24 +6,22 @@ public class FireballScript : MonoBehaviour
     [SerializeField] GameObject FireBall;
     [SerializeField] GameObject ExplosionPrefab;
 
-    private float _speed = 10;
+    private float _speed = 20;
+    private float _currentSpeed;
 
     private void Start()
     {
-
         if (PlayerControls.PlayerFlipped == false)
         {
-            _speed = 10;
+            _currentSpeed = _speed;
         }
         if (PlayerControls.PlayerFlipped == true)
         {
-            _speed = -10;
+            _currentSpeed = -1 * _speed;
         }
 
-        RgBody.linearVelocity = new Vector2(_speed, RgBody.linearVelocity.y);
+        RgBody.linearVelocity = new Vector2(_currentSpeed, RgBody.linearVelocity.y);
     }
-
-
 
     private void Explode()
     {

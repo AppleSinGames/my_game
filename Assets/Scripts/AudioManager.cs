@@ -32,7 +32,6 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
@@ -42,8 +41,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-            DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         if (MusicSource != null)
         {
