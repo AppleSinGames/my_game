@@ -29,11 +29,20 @@ public class Saves
         }
     }
 
-    public static float ChangeSound()
+    public static float ChangeMusicVolume()
     {
         if (PlayerPrefs.HasKey("Music"))
         {
             return PlayerPrefs.GetFloat("Music");
+        }
+
+        return 0;
+    }
+    public static float ChangeSFXVolume()
+    {
+        if (PlayerPrefs.HasKey("SFX"))
+        {
+            return PlayerPrefs.GetFloat("SFX");
         }
 
         return 0;

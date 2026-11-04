@@ -24,10 +24,15 @@ public class AudioManager : MonoBehaviour
         SFXSource.Play();
     }
 
-    public void MusicSound(float _volume)
+    public void MusicVolume(float _volume)
     {
         MusicSource.volume = _volume;
         Saves.SaveNum("Music", MusicSource.volume);
+    }
+    public void SFXVolume(float _volume)
+    {
+        SFXSource.volume = _volume;
+        Saves.SaveNum("SFX", SFXSource.volume);
     }
 
     void Awake()
@@ -45,7 +50,11 @@ public class AudioManager : MonoBehaviour
 
         if (MusicSource != null)
         {
-            MusicSource.volume = Saves.ChangeSound();
+            MusicSource.volume = Saves.ChangeMusicVolume();
+        }
+        if (SFXSource != null)
+        {
+            SFXSource.volume = Saves.ChangeSFXVolume();
         }
     }
     void Start()
