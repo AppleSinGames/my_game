@@ -10,11 +10,13 @@ public class PlayerControls : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public GameObject FireballPrefab;
 
-    public float HorizontalInput    { get; set; }
-    public float LockMove           { get; set; }
-    public float LockFire           { get; set; }
-    public float FireBallPos        { get; set; } = 1f;
-    public float CurrentFireBallPos { get; set; } 
+    public float HorizontalInput     { get; set; }
+    public float LockMove            { get; set; }
+    public float LockFire            { get; set; }
+    public float FireBallPosX        { get; set; } = 1f;
+    public float FireBallPosY        { get; set; } = 1f;
+    public float CurrentFireBallX { get; set; } = 1f;
+    public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
     
     public int Health               { get; set; } = 1;
@@ -22,7 +24,7 @@ public class PlayerControls : MonoBehaviour
     public int Speed                { get; set; } = 6;
     public int JumpForce            { get; set; } = 10;
     public bool JumpAvailable       { get; set; } = false;
-    public Vector2 SpawnPoint       { get; set; } = new(-6.5f, -1.5f);
+    public Vector2 SpawnPoint       { get; set; } = new(-39.2f, -15.84f);
 
     void OnMove(InputValue value)
     {
@@ -49,9 +51,13 @@ public class PlayerControls : MonoBehaviour
     {
         if (value.isPressed && LockFire <= 0)
         {
-            Instantiate(FireballPrefab, new Vector2(Pos.position.x + CurrentFireBallPos, Pos.position.y), Quaternion.identity);
+            Instantiate(FireballPrefab, CurrentFireBallPos, Quaternion.identity);
             LockFire = FireCd;
-            AudioManager.Instance.PlayFireball();
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayFireball();
+            }
             PlayerUi.Instance.StartCD();
         }
     }
@@ -59,7 +65,7 @@ public class PlayerControls : MonoBehaviour
     private void Start()
     {
         PlayerFlipped = false;
-        CurrentFireBallPos = FireBallPos;
+        Pos.position = SpawnPoint;
     }
 
     private void Update()
@@ -68,14 +74,14 @@ public class PlayerControls : MonoBehaviour
         {
             SpriteRenderer.flipX = true;
             PlayerFlipped = true;
-            CurrentFireBallPos = -1 * FireBallPos;
+            CurrentFireBallX = -1 * FireBallPosX;
         }
 
         if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
             PlayerFlipped = false;
-            CurrentFireBallPos = FireBallPos;
+            CurrentFireBallX = FireBallPosX;
         }
 
         if (Health <= 0)
@@ -93,6 +99,9 @@ public class PlayerControls : MonoBehaviour
         {
             LockFire -= Time.deltaTime;
         }
+
+        CurrentFireBallPos = new(Pos.position.x + CurrentFireBallX, Pos.position.y + FireBallPosY);
+
     }
     private void FixedUpdate()
     {

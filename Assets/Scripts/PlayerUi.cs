@@ -15,14 +15,23 @@ public class PlayerUi : MonoBehaviour
 
     private IEnumerator ShowFireCd()
     {
-        while (_cdFill.fillAmount > 0)
-        {
-            yield return _waitForSeconds0_02;
-            _cdFill.fillAmount -= 0.02f / _controls.FireCd;
+        float duration = _controls.FireCd;
+        float elapsed = 0f;
 
-            if (_cdFill.fillAmount <= 0) break;
+        _cdFill.fillAmount = 1f;
+
+        while (elapsed < duration)
+        {
+            yield return null;
+
+            elapsed += Time.unscaledDeltaTime;
+
+            _cdFill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / duration);
         }
+
+        _cdFill.fillAmount = 0f;
     }
+
 
     void HealthControl()
     {

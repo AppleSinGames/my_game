@@ -25,7 +25,7 @@ public class Enemy_script : MonoBehaviour
         if (collision.gameObject.CompareTag("Spike"))
         {
             UiControl.Score++;
-            Instantiate(_enemyPrefab, Positions[Random.Range(0, 3)], Quaternion.identity);
+            Instantiate(_enemyPrefab, Positions[Random.Range(0, Positions.Length)], Quaternion.identity);
             Destroy(gameObject);
         }
     }
