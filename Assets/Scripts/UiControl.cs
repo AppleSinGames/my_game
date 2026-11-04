@@ -10,6 +10,7 @@ public class UiControl : MonoBehaviour
     [Header("___________OBJS___________")]
     [SerializeField] GameObject Death;
     [SerializeField] GameObject PausePanel;
+    [SerializeField] GameObject OptionsPanel;
 
     public static int Score;
     public int _highScore;
@@ -61,6 +62,11 @@ public class UiControl : MonoBehaviour
         if (Instance == null) 
         { 
             Instance = this;
+        }
+
+        if (OptionsPanel != null)
+        {
+            //DontDestroyOnLoad(OptionsPanel);
         }
     }
 
