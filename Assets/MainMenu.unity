@@ -1601,6 +1601,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3389425068837366211, guid: 0e68e546544127e418667923f96cad72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955424956362785336, guid: 0e68e546544127e418667923f96cad72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704600050941492948, guid: 0e68e546544127e418667923f96cad72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172448729697198274, guid: 0e68e546544127e418667923f96cad72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5502669264096141934, guid: 0e68e546544127e418667923f96cad72, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7987678457822231592, guid: 0e68e546544127e418667923f96cad72, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
