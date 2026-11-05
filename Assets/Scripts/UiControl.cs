@@ -63,11 +63,6 @@ public class UiControl : MonoBehaviour
         { 
             Instance = this;
         }
-
-        if (OptionsPanel != null)
-        {
-            //DontDestroyOnLoad(OptionsPanel);
-        }
     }
 
     void Start()

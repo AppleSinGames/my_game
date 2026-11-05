@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerControls))]
 public class PlayerUi : MonoBehaviour 
 {
     private static readonly int FullHash = Animator.StringToHash("Full");

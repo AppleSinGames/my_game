@@ -64,5 +64,11 @@ public class AudioManager : MonoBehaviour
             MusicSource.clip = MainTheme;
             MusicSource.Play();
         }
+
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            MusicSource.clip = MainTheme;
+            MusicSource.Play();
+        }
     }
 }

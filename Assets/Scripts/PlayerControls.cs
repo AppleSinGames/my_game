@@ -18,7 +18,9 @@ public class PlayerControls : MonoBehaviour
     public float CurrentFireBallX { get; set; } = 1f;
     public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
-    
+    public static bool IsJumping = false;
+
+
     public int Health               { get; set; } = 1;
     public float FireCd             { get; set; } = 1.5f;
     public int Speed                { get; set; } = 6;
@@ -29,6 +31,7 @@ public class PlayerControls : MonoBehaviour
     void OnMove(InputValue value)
     {
         HorizontalInput = value.Get<Vector2>().x;
+
     }
 
     void OnPause(InputValue value)
