@@ -6,6 +6,7 @@ public class Enemy_script : MonoBehaviour
     [SerializeField] Rigidbody2D _rgBody;
 
     [SerializeField] Vector2[] Positions;
+    [SerializeField] Vector2[] PatrolPositions;
     private float _lockMove;
 
     private void OnCollisionEnter2D(Collision2D collision)

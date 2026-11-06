@@ -53,8 +53,6 @@ public class PlayerPhys : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        PlayerControls.IsJumping = false;
-
         if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.GetContact(0).normal.y > 0.5f)
@@ -66,8 +64,6 @@ public class PlayerPhys : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        PlayerControls.IsJumping = true;
-
         if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
         {
             _controls.JumpAvailable = false;

@@ -19,7 +19,8 @@ public class PlayerControls : MonoBehaviour
     public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
     public static bool IsJumping = false;
-
+    public static bool IsFalling = false;
+    public static bool IsRunning = false;
 
     public int Health               { get; set; } = 1;
     public float FireCd             { get; set; } = 1.5f;
@@ -31,7 +32,6 @@ public class PlayerControls : MonoBehaviour
     void OnMove(InputValue value)
     {
         HorizontalInput = value.Get<Vector2>().x;
-
     }
 
     void OnPause(InputValue value)
@@ -104,14 +104,12 @@ public class PlayerControls : MonoBehaviour
         }
 
         CurrentFireBallPos = new(Pos.position.x + CurrentFireBallX, Pos.position.y + FireBallPosY);
-
     }
     private void FixedUpdate()
     {
         if (LockMove <= 0)
         {
             RgBody.linearVelocityX = HorizontalInput * Speed;
-
         }
     }
 }
