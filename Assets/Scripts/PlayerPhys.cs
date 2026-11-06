@@ -6,6 +6,7 @@ public class PlayerPhys : MonoBehaviour
 {
     private PlayerControls _controls;
     private bool _isDying = false;
+    private float _knockbackForce = 10;
 
     private IEnumerator RespawnRoutine()
     {
@@ -20,7 +21,7 @@ public class PlayerPhys : MonoBehaviour
         _controls.RgBody.SetRotation(0);
 
         _controls.RgBody.simulated = false;
-        transform.position = _controls.SpawnPoint;
+        transform.position = _controls.SpawnPoint.position;
 
         yield return new WaitForFixedUpdate();
 
@@ -31,33 +32,30 @@ public class PlayerPhys : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
             if (collision.GetContact(0).normal.y > 0.5f)
             {
                 _controls.AvailableJumps = 2;
             }
         }
-        if (collision.gameObject.CompareTag("Fireball"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            _controls.LockMove = 0.5f;
-            UnitsEnv.KnockBack(_controls.RgBody, collision);
+            UnitsEnv.KnockBack(_controls.RgBody, collision, _knockbackForce);
+            _controls.AvailableJumps = 1;
         }
-
-        if (collision.gameObject.CompareTag("Border"))
+        else if (collision.gameObject.CompareTag("Border"))
         {
             _controls.LockMove = 0.5f;
             UnitsEnv.GoDown(_controls.RgBody);
         }
-
-        if (collision.gameObject.CompareTag("Spike"))
+        else if (collision.gameObject.CompareTag("Spike"))
         {
             if (_isDying) return;
 
             StartCoroutine(RespawnRoutine());
         }
     }
-
 
     private void OnCollisionExit2D(Collision2D collision)
     {

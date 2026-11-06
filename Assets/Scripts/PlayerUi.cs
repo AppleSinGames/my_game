@@ -24,15 +24,11 @@ public class PlayerUi : MonoBehaviour
         while (elapsed < duration)
         {
             yield return null;
-
             elapsed += Time.unscaledDeltaTime;
-
             _cdFill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / duration);
         }
-
         _cdFill.fillAmount = 0f;
     }
-
 
     void HealthControl()
     {

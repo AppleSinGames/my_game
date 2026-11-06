@@ -34,10 +34,4 @@ public class FireballScript : MonoBehaviour
         Explode();
         Destroy(gameObject);
     }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        Explode();
-        Destroy(gameObject);
-    }
-
 }

@@ -15,11 +15,6 @@ public class PlayerAnimationControll : MonoBehaviour
     bool IsInAir = false;
     private PlayerControls _controls;
 
-    private void Animation()
-    {
-
-    }
-
     private void Awake()
     {
         _controls = GetComponent<PlayerControls>();

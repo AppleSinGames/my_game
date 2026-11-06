@@ -2,17 +2,18 @@ using UnityEngine;
 
 public static class UnitsEnv {
 
-    public static void KnockBack(Rigidbody2D RgBody, Collision2D collision)
+    public static void KnockBack(Rigidbody2D RgBody, Collision2D collision, float _knockbackForce)
     {
+
         RgBody.linearVelocity = Vector2.zero;
 
         if (collision.GetContact(0).normal.x < 0)
         {
-            RgBody.AddForce(new Vector2(-5, 5), ForceMode2D.Impulse);
+            RgBody.AddForce(new Vector2(-_knockbackForce, 1), ForceMode2D.Impulse);
         }
         if (collision.GetContact(0).normal.x > 0)
         {
-            RgBody.AddForce(new Vector2(5, 5), ForceMode2D.Impulse);
+            RgBody.AddForce(new Vector2(_knockbackForce, 1), ForceMode2D.Impulse);
         }
     }
 

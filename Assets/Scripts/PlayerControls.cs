@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    public Transform SpawnPoint;
     public Rigidbody2D RgBody;
     public GameObject Player;
     public Transform Pos;
@@ -21,9 +22,9 @@ public class PlayerControls : MonoBehaviour
     public int Health               { get; set; } = 1;
     public float FireCd             { get; set; } = 1.5f;
     public int Speed                { get; set; } = 6;
-    public int JumpForce            { get; set; } = 10;
+    public int DashSpeed            { get; set; } = 20;
+    public int JumpForce            { get; set; } = 7;
     public int AvailableJumps       { get; set; } = 2;
-    public Vector2 SpawnPoint       { get; set; } = new(-39.2f, -15.84f);
 
     void OnMove(InputValue value)
     {
@@ -65,7 +66,7 @@ public class PlayerControls : MonoBehaviour
     private void Start()
     {
         PlayerFlipped = false;
-        Pos.position = SpawnPoint;
+        Pos.position = SpawnPoint.position;
     }
 
     private void Update()
@@ -75,7 +76,6 @@ public class PlayerControls : MonoBehaviour
             SpriteRenderer.flipX = true;
             PlayerFlipped = true;
         }
-
         if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
@@ -92,7 +92,6 @@ public class PlayerControls : MonoBehaviour
         {
             LockMove -= Time.deltaTime;
         }
-
         if (LockFire > 0)
         {
             LockFire -= Time.deltaTime;
