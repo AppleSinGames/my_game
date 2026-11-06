@@ -9,6 +9,10 @@ public class PlayerAnimationControll : MonoBehaviour
     [SerializeField] private float verticalVelocityThreshold = 0.3f;
     [SerializeField] private float horizontalVelocityThreshold = 0.1f;
     [SerializeField] Animator _playerAnimator;
+    public static bool IsJumping = false;
+    public static bool IsFalling = false;
+    public static bool IsRunning = false;
+    bool IsInAir = false;
     private PlayerControls _controls;
 
     private void Animation()
@@ -28,33 +32,33 @@ public class PlayerAnimationControll : MonoBehaviour
 
         if (velocityY > verticalVelocityThreshold)
         {
-            PlayerControls.IsJumping = true;
-            PlayerControls.IsFalling = false;
+            IsJumping = true;
+            IsFalling = false;
         }
         else if (velocityY < -verticalVelocityThreshold)
         {
-            PlayerControls.IsJumping = false;
-            PlayerControls.IsFalling = true;
+            IsJumping = false;
+            IsFalling = true;
         }
         else
         {
-            PlayerControls.IsJumping = false;
-            PlayerControls.IsFalling = false;
+            IsJumping = false;
+            IsFalling = false;
         }
 
-        bool isInAir = PlayerControls.IsJumping || PlayerControls.IsFalling;
+        IsInAir = IsJumping || IsFalling;
 
-        if (Mathf.Abs(velocityX) > horizontalVelocityThreshold && !isInAir)
+        if (Mathf.Abs(velocityX) > horizontalVelocityThreshold && !IsInAir)
         {
-            PlayerControls.IsRunning = true;
+            IsRunning = true;
         }
         else
         {
-            PlayerControls.IsRunning = false;
+            IsRunning = false;
         }
 
-        _playerAnimator.SetBool(IsJumpingHash, PlayerControls.IsJumping);
-        _playerAnimator.SetBool(IsFallingHash, PlayerControls.IsFalling);
-        _playerAnimator.SetBool(IsRunningHash, PlayerControls.IsRunning);
+        _playerAnimator.SetBool(IsJumpingHash, IsJumping);
+        _playerAnimator.SetBool(IsFallingHash, IsFalling);
+        _playerAnimator.SetBool(IsRunningHash, IsRunning);
     }
 }

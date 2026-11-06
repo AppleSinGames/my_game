@@ -31,6 +31,13 @@ public class PlayerPhys : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
+        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.GetContact(0).normal.y > 0.5f)
+            {
+                _controls.AvailableJumps = 2;
+            }
+        }
         if (collision.gameObject.CompareTag("Fireball"))
         {
             _controls.LockMove = 0.5f;
@@ -51,22 +58,12 @@ public class PlayerPhys : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
-        {
-            if (collision.GetContact(0).normal.y > 0.5f)
-            {
-                _controls.JumpAvailable = true;
-            }
-        }
-    }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
         {
-            _controls.JumpAvailable = false;
+            _controls.AvailableJumps = 1;
         }
     }
 

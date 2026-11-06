@@ -13,20 +13,16 @@ public class PlayerControls : MonoBehaviour
     public float HorizontalInput     { get; set; }
     public float LockMove            { get; set; }
     public float LockFire            { get; set; }
-    public float FireBallPosX        { get; set; } = 1f;
     public float FireBallPosY        { get; set; } = 1f;
     public float CurrentFireBallX { get; set; } = 1f;
     public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
-    public static bool IsJumping = false;
-    public static bool IsFalling = false;
-    public static bool IsRunning = false;
 
     public int Health               { get; set; } = 1;
     public float FireCd             { get; set; } = 1.5f;
     public int Speed                { get; set; } = 6;
     public int JumpForce            { get; set; } = 10;
-    public bool JumpAvailable       { get; set; } = false;
+    public int AvailableJumps       { get; set; } = 2;
     public Vector2 SpawnPoint       { get; set; } = new(-39.2f, -15.84f);
 
     void OnMove(InputValue value)
@@ -44,9 +40,10 @@ public class PlayerControls : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (value.isPressed && JumpAvailable)
+        if (value.isPressed && AvailableJumps > 0)
         {
             RgBody.linearVelocityY = JumpForce;
+            AvailableJumps -=1;
         }
     }
 
@@ -77,14 +74,12 @@ public class PlayerControls : MonoBehaviour
         {
             SpriteRenderer.flipX = true;
             PlayerFlipped = true;
-            CurrentFireBallX = -1 * FireBallPosX;
         }
 
         if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
             PlayerFlipped = false;
-            CurrentFireBallX = FireBallPosX;
         }
 
         if (Health <= 0)
@@ -103,7 +98,7 @@ public class PlayerControls : MonoBehaviour
             LockFire -= Time.deltaTime;
         }
 
-        CurrentFireBallPos = new(Pos.position.x + CurrentFireBallX, Pos.position.y + FireBallPosY);
+        CurrentFireBallPos = new(Pos.position.x, Pos.position.y + FireBallPosY);
     }
     private void FixedUpdate()
     {
