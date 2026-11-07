@@ -41,6 +41,7 @@ public class PlayerPhys : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            _controls.LockMove = 0.5f;
             UnitsEnv.KnockBack(_controls.RgBody, collision, _knockbackForce);
             _controls.AvailableJumps = 1;
         }
@@ -59,7 +60,7 @@ public class PlayerPhys : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
             _controls.AvailableJumps = 1;
         }

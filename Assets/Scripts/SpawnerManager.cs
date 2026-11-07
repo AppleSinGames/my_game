@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpawnerManager : MonoBehaviour
 {
     [SerializeField] GameObject _enemyPrefab;
+    [SerializeField] GameObject _playerPrefab;
     [SerializeField] Transform[] Spawners;
 
     private void Start()
@@ -13,3 +14,5 @@ public class SpawnerManager : MonoBehaviour
         }
     }
 }
+
+

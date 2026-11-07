@@ -17,10 +17,10 @@ GameObject:
   - component: {fileID: 9027135349173084122}
   - component: {fileID: 5014743770158778903}
   - component: {fileID: -274806091402571874}
-  - component: {fileID: 1856673277236105612}
   - component: {fileID: 4256624658911512918}
-  m_Layer: 0
-  m_Name: Mc
+  - component: {fileID: -5691857390442561854}
+  m_Layer: 6
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +34,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723197165334372105}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.815, y: -2.009, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -444.14, y: -258.48, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,8 +192,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0045337677, y: 0.47993755}
-  m_Size: {x: 0.1783905, y: 0.7720337}
+  m_Offset: {x: -0.010808945, y: 0.47993755}
+  m_Size: {x: 0.3652954, y: 0.7720337}
   m_Direction: 0
 --- !u!70 &8740746531226707412
 CapsuleCollider2D:
@@ -229,8 +229,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.17189455}
-  m_Size: {x: 0.21214867, y: 0.237216}
+  m_Offset: {x: -0.0013971329, y: 0.2430296}
+  m_Size: {x: 0.34326363, y: 0.41579247}
   m_Direction: 0
 --- !u!95 &9027135349173084122
 Animator:
@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684ef9ff7d388d844a81fced602a630b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
+  SpawnPoint: {fileID: 0}
   RgBody: {fileID: 4475904474512597901}
   Player: {fileID: 1723197165334372105}
   Pos: {fileID: 6387474858488514939}
@@ -283,23 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae67454535605f4f99a479f61cb531f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPhys
---- !u!114 &1856673277236105612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723197165334372105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b0026805977cf4e8552b8192839ffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerUi
-  Hearts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _cdImage: {fileID: 0}
 --- !u!114 &4256624658911512918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,4 +296,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0edf16c182c2341b65e1016dc43c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationControll
+  verticalVelocityThreshold: 0.3
+  horizontalVelocityThreshold: 0.1
   _playerAnimator: {fileID: 9027135349173084122}
+--- !u!114 &-5691857390442561854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723197165334372105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b0026805977cf4e8552b8192839ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUi
+  Hearts: []
+  _cdImage: {fileID: 0}
