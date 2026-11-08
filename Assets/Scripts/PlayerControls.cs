@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 
 public class PlayerControls : MonoBehaviour
 {
@@ -11,20 +11,23 @@ public class PlayerControls : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public GameObject FireballPrefab;
 
-    public float HorizontalInput     { get; set; }
-    public float LockMove            { get; set; }
-    public float LockFire            { get; set; }
-    public float FireBallPosY        { get; set; } = 1f;
+    public float HorizontalInput { get; set; }
+    public float LockMove { get; set; }
+    public float LockFire { get; set; }
+    public float FireBallPosY { get; set; } = 1f;
     public float CurrentFireBallX { get; set; } = 1f;
     public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
 
-    public int Health               { get; set; } = 1;
-    public float FireCd             { get; set; } = 1.5f;
-    public int Speed                { get; set; } = 6;
-    public int DashSpeed            { get; set; } = 20;
-    public int JumpForce            { get; set; } = 7;
-    public int AvailableJumps       { get; set; } = 2;
+    public int Health { get; set; } = 1;
+    public float FireCd { get; set; } = 1.5f;
+    public int Speed { get; set; } = 6;
+    public float DashSpeed { get; set; } = 15;
+    public float DashCd { get; set; } = 1;
+    public float LockDash { get; set; } = 1;
+    public int JumpForce { get; set; } = 8;
+    public int AvailableJumps { get; set; } = 2;
+    public int Direction { get; set; } = 1;
 
     void OnMove(InputValue value)
     {
@@ -38,10 +41,31 @@ public class PlayerControls : MonoBehaviour
             UiControl.Instance.PauseGame();
         }
     }
+    void OnDash(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            LockMove = 20f;
+            RgBody.gravityScale = 0;
+            if (Direction != 0)
+            {
+                RgBody.linearVelocity = new Vector2(DashSpeed * Direction, 0);
+            }
+            StartCoroutine(nameof(DashRoutine));
+        }
+    }
+
+    private IEnumerator DashRoutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        RgBody.linearVelocity = Vector2.zero;
+        LockMove = 0;
+        RgBody.gravityScale = 1;
+    }
 
     void OnJump(InputValue value)
     {
-        if (value.isPressed && AvailableJumps > 0)
+        if (value.isPressed && AvailableJumps > 0 && LockMove <= 0)
         {
             RgBody.linearVelocityY = JumpForce;
             AvailableJumps -=1;
@@ -75,11 +99,13 @@ public class PlayerControls : MonoBehaviour
         {
             SpriteRenderer.flipX = true;
             PlayerFlipped = true;
+            Direction = -1;
         }
-        if (HorizontalInput > 0)
+        else if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
             PlayerFlipped = false;
+            Direction = 1;
         }
 
         if (Health <= 0)

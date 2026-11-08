@@ -172,3 +172,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_script
   _rgBody: {fileID: 5712982706343932409}
+  _sprite: {fileID: 8998497865998160176}
+  _selfSpawner: {x: 0, y: 0}

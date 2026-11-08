@@ -39,7 +39,7 @@ public class PlayerPhys : MonoBehaviour
                 _controls.AvailableJumps = 2;
             }
         }
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
             _controls.LockMove = 0.5f;
             UnitsEnv.KnockBack(_controls.RgBody, collision, _knockbackForce);
