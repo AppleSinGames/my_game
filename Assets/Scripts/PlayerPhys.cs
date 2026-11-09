@@ -7,6 +7,7 @@ public class PlayerPhys : MonoBehaviour
     private PlayerControls _controls;
     private bool _isDying = false;
     private float _knockbackForce = 10;
+    Enemy_script _script;
 
     private IEnumerator RespawnRoutine()
     {
@@ -41,9 +42,7 @@ public class PlayerPhys : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
-            _controls.LockMove = 0.5f;
-            UnitsEnv.KnockBack(_controls.RgBody, collision, _knockbackForce);
-            _controls.AvailableJumps = 1;
+            _controls.LockMove = 0.7f;
         }
         else if (collision.gameObject.CompareTag("Border"))
         {
@@ -53,7 +52,6 @@ public class PlayerPhys : MonoBehaviour
         else if (collision.gameObject.CompareTag("Spike"))
         {
             if (_isDying) return;
-
             StartCoroutine(RespawnRoutine());
         }
     }

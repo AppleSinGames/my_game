@@ -2,23 +2,30 @@ using UnityEngine;
 
 public static class UnitsEnv {
 
-    public static void KnockBack(Rigidbody2D RgBody, Collision2D collision, float _knockbackForce)
+    public static void KnockBack(Rigidbody2D _victimRgBody, Vector2 attackerPosition, float _knockbackForce)
     {
-        RgBody.linearVelocity = Vector2.zero;
+        _victimRgBody.linearVelocity = Vector2.zero;
 
-        if (collision.GetContact(0).normal.x < 0)
+        float directionX = _victimRgBody.position.x - attackerPosition.x;
+
+        if (directionX > 0)
         {
-            RgBody.AddForce(new Vector2(-_knockbackForce, 3), ForceMode2D.Impulse);
+            _victimRgBody.AddForce(new Vector2(_knockbackForce, 3f), ForceMode2D.Impulse);
         }
-        if (collision.GetContact(0).normal.x > 0)
+        else
         {
-            RgBody.AddForce(new Vector2(_knockbackForce, 3), ForceMode2D.Impulse);
+            _victimRgBody.AddForce(new Vector2(-_knockbackForce, 3f), ForceMode2D.Impulse);
         }
     }
 
     public static void GoDown(Rigidbody2D RgBody)
     {
         RgBody.linearVelocity = new Vector2(0, -10);
+    }
+
+    public static float StartCooldown(float _cd)
+    {
+        return _cd;
     }
 }
 

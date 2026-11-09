@@ -25,8 +25,7 @@ public class FireballScript : MonoBehaviour
 
     private void Explode()
     {
-        GameObject Explosion = Instantiate(ExplosionPrefab, FireBall.transform.position, Quaternion.identity);
-        Destroy(Explosion, 0.2f);
+        Instantiate(ExplosionPrefab, FireBall.transform.position, Quaternion.identity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

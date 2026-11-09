@@ -14,16 +14,24 @@ public class Enemy_script : MonoBehaviour
 
     public Vector2 _selfSpawner;
 
+
+    public void Stunned()
+    {
+        _lockMove = 0.7f;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Fireball"))
         {
             _lockMove = 0.7f;
-            UnitsEnv.KnockBack(_rgBody, collision, _knockbackForce);
         }
         if (collision.gameObject.CompareTag("Border"))
         {
             UnitsEnv.GoDown(_rgBody);
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            UnitsEnv.KnockBack(collision.rigidbody, transform.position  , _knockbackForce);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {

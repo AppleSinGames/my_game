@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    private static WaitForSeconds _waitForSeconds0_2 = new (0.2f);
     public Transform SpawnPoint;
     public Rigidbody2D RgBody;
     public GameObject Player;
@@ -57,7 +58,7 @@ public class PlayerControls : MonoBehaviour
 
     private IEnumerator DashRoutine()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return _waitForSeconds0_2;
         RgBody.linearVelocity = Vector2.zero;
         LockMove = 0;
         RgBody.gravityScale = 1;
@@ -113,11 +114,6 @@ public class PlayerControls : MonoBehaviour
             Destroy(Player);
             UiControl.Instance.DeathScreen();
         }
-
-        if (LockMove > 0)
-        {
-            LockMove -= Time.deltaTime;
-        }
         if (LockFire > 0)
         {
             LockFire -= Time.deltaTime;
@@ -127,6 +123,11 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (LockMove > 0)
+        {
+            LockMove -= Time.fixedDeltaTime;
+            return;
+        }
         if (LockMove <= 0)
         {
             RgBody.linearVelocityX = HorizontalInput * Speed;

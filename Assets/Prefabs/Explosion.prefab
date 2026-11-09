@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6573602989460583709}
   - component: {fileID: 5921691579164847265}
   - component: {fileID: -8064485479019465437}
+  - component: {fileID: -1899124707050912955}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Fireball
@@ -129,3 +130,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &-1899124707050912955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895918010570051215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223e41f256cbb6e4dabf3b05a9ed205d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

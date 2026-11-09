@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6018932642914006937}
   - component: {fileID: 6042399344187278186}
   - component: {fileID: 4694508007090106223}
-  - component: {fileID: 9052952401882608974}
+  - component: {fileID: -2939126844394005327}
   m_Layer: 7
   m_Name: Fireball
   m_TagString: Fireball
@@ -158,7 +158,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &9052952401882608974
+--- !u!114 &-2939126844394005327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
