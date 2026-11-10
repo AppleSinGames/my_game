@@ -46,8 +46,7 @@ public class PlayerPhys : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Border"))
         {
-            _controls.LockMove = 0.12f;
-            UnitsEnv.GoDown(_controls.RgBody);
+            _controls.AvailableJumps = 1;
         }
         else if (collision.gameObject.CompareTag("Spike"))
         {
