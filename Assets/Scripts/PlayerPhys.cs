@@ -42,11 +42,11 @@ public class PlayerPhys : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
-            _controls.LockMove = 0.7f;
+            _controls.LockMove = 0.4f;
         }
         else if (collision.gameObject.CompareTag("Border"))
         {
-            _controls.LockMove = 0.5f;
+            _controls.LockMove = 0.12f;
             UnitsEnv.GoDown(_controls.RgBody);
         }
         else if (collision.gameObject.CompareTag("Spike"))

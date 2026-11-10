@@ -55589,7 +55589,7 @@ GameObject:
   - component: {fileID: 743352776}
   - component: {fileID: 743352778}
   - component: {fileID: 743352777}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: platforms
   m_TagString: Platform
   m_Icon: {fileID: 0}
