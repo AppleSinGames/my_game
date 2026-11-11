@@ -31,6 +31,6 @@ public class ExplosionScript : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(nameof(DestroyRoutine));
+        StartCoroutine(DestroyRoutine());
     }
 }

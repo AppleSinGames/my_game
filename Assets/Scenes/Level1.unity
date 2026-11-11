@@ -59367,7 +59367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!70 &1615869705
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -66966,6 +66966,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5014743770158778903, guid: 938fd93438c232147b2f9298fa310c92, type: 3}
+      propertyPath: _fireScr
+      value: 
+      objectReference: {fileID: -2939126844394005327, guid: 8dfcbbfc042f65940bb84942e55cc6ff, type: 3}
     - target: {fileID: 5014743770158778903, guid: 938fd93438c232147b2f9298fa310c92, type: 3}
       propertyPath: SpawnPoint
       value: 

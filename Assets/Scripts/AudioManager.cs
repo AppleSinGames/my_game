@@ -57,16 +57,8 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
             MusicSource.clip = MainTheme;
             MusicSource.Play();
-        }
-
-        if (SceneManager.GetActiveScene().name == "Level1")
-        {
-            MusicSource.clip = MainTheme;
-            MusicSource.Play();
-        }
+  
     }
 }

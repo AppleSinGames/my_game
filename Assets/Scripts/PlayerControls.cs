@@ -17,7 +17,6 @@ public class PlayerControls : MonoBehaviour
     //----------------------------STATS----------------------------
     public float HorizontalInput { get; set; }
     public float LockMove { get; set; }
-    public float FireBallPosY { get; set; } = 1f;
 
     //----------------------------STATS----------------------------
     public Unit Player { get; } = new()
@@ -33,14 +32,12 @@ public class PlayerControls : MonoBehaviour
     {
         Cooldown = 1,
         Speed = 20,
-        Direction = 1
     };
 
     public int AvailableJumps { get; set; } = 2;
 
     //----------------------------SPELLS----------------------------
     public Spell Dash { get; } = new() { Cooldown = 1, Duration = 0.25f};
-    public float FireballPosY { get; private set; }
 
     void OnMove(InputValue value)
     {
@@ -61,7 +58,7 @@ public class PlayerControls : MonoBehaviour
         {
             Dash.Use();
 
-            StartCoroutine(nameof(DashRoutine));
+            StartCoroutine(DashRoutine());
         }
     }
 
