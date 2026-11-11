@@ -6,7 +6,6 @@ public class PlayerControls : MonoBehaviour
 {
 
     //----------------------------UNITY----------------------------
-    private static WaitForSeconds _waitForSeconds0_2 = new (0.2f);
     public Transform SpawnPoint;
     public Rigidbody2D RgBody;
     public GameObject Player;
@@ -32,8 +31,8 @@ public class PlayerControls : MonoBehaviour
     public int AvailableJumps { get; set; } = 2;
 
     //----------------------------CD----------------------------
-    public Cooldowns Fireball = new() { Cooldown = 1};
-    public Cooldowns Dash = new() { Cooldown = 1};
+    public Cooldowns Fireball { get; } = new() { Cooldown = 1};
+    public Cooldowns Dash { get; } = new() { Cooldown = 1, Duration = 0.25f};
 
     void OnMove(InputValue value)
     {
@@ -47,23 +46,28 @@ public class PlayerControls : MonoBehaviour
             UiControl.Instance.PauseGame();
         }
     }
+
     void OnDash(InputValue value)
     {
         if (value.isPressed && Dash.IsReady)
         {
-            LockMove = 20f;
-            RgBody.gravityScale = 0;
-            if (Direction != 0)
-            {
-                RgBody.linearVelocity = new Vector2(DashSpeed * Direction, 0);
-            }
+            Dash.Use();
+
             StartCoroutine(nameof(DashRoutine));
         }
     }
 
     private IEnumerator DashRoutine()
     {
-        yield return _waitForSeconds0_2;
+        LockMove = 20f;
+        RgBody.gravityScale = 0;
+        if (Direction != 0)
+        {
+            RgBody.linearVelocity = new Vector2(DashSpeed * Direction, 0);
+        }
+
+        yield return new WaitForSeconds(Dash.Duration);
+
         RgBody.linearVelocity = Vector2.zero;
         LockMove = 0;
         RgBody.gravityScale = 1;

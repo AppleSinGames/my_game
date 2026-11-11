@@ -4,10 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerPhys : MonoBehaviour
 {
-    private PlayerControls _controls;
     private bool _isDying = false;
-    private float _knockbackForce = 10;
-    Enemy_script _script;
+    private PlayerControls _controls;
 
     private IEnumerator RespawnRoutine()
     {

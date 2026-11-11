@@ -3,16 +3,22 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerAnimationControll : MonoBehaviour
 {
+    //----------------------------HASH----------------------------
     private static readonly int IsRunningHash = Animator.StringToHash("IsRunning");
     private static readonly int IsJumpingHash = Animator.StringToHash("IsJumping");
     private static readonly int IsFallingHash = Animator.StringToHash("IsFalling");
+
+    //----------------------------UNITY----------------------------
     [SerializeField] private float verticalVelocityThreshold = 0.3f;
     [SerializeField] private float horizontalVelocityThreshold = 0.1f;
     [SerializeField] Animator _playerAnimator;
+
+    //----------------------------STATES----------------------------
     public static bool IsJumping = false;
     public static bool IsFalling = false;
     public static bool IsRunning = false;
     bool IsInAir = false;
+
     private PlayerControls _controls;
 
     private void Awake()

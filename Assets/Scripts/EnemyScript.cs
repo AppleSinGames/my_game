@@ -2,23 +2,28 @@ using UnityEngine;
 
 public class Enemy_script : MonoBehaviour
 {
+
+    //----------------------------UNITY----------------------------
     [SerializeField] Rigidbody2D _rgBody;
     [SerializeField] SpriteRenderer _sprite;
     [SerializeField] Transform _groundCheck;
     [SerializeField] Transform _wallCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
+    public Vector2 _selfSpawner;
 
-    private float _groundCheckDist = 0.5f;
-    private float _wallCheckDist = 0.5f;
-    private float _knockbackForce = 20f;
+    //----------------------------STATS----------------------------
     private float _speed = 5f;
     private int _direction = 1;
+    private float _knockbackForce = 20f;
+
+    //----------------------------STATES----------------------------
     private float _lockMove;
     private bool _isPatrolling;
     private bool _isGrounded;
+    private float _groundCheckDist = 0.5f;
+    private float _wallCheckDist = 0.5f;
 
-    public Vector2 _selfSpawner;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -4,9 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerUi : MonoBehaviour 
 {
+    //----------------------------HASH----------------------------
     private static readonly int FullHash = Animator.StringToHash("Full");
-    private static WaitForSeconds _waitForSeconds0_02 = new(0.02f);
+    private static WaitForSeconds _waitForSeconds0_02 { get; } = new(0.02f);
 
+    //----------------------------UNITY----------------------------
     [SerializeField] GameObject[] Hearts;
     [SerializeField] private GameObject _cdImage;
     private UnityEngine.UI.Image _cdFill;

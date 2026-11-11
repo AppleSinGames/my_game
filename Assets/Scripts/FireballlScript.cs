@@ -7,20 +7,20 @@ public class FireballScript : MonoBehaviour
     [SerializeField] GameObject ExplosionPrefab;
 
     private float _speed = 20;
-    private float _currentSpeed;
+    private float _direction;
 
     private void Start()
     {
         if (PlayerControls.PlayerFlipped == false)
         {
-            _currentSpeed = _speed;
+            _direction = 1;
         }
         if (PlayerControls.PlayerFlipped == true)
         {
-            _currentSpeed = -1 * _speed;
+            _direction = - 1;
         }
 
-        RgBody.linearVelocity = new Vector2(_currentSpeed, RgBody.linearVelocity.y);
+        RgBody.linearVelocity = new Vector2(_speed * _direction, RgBody.linearVelocity.y);
     }
 
     private void Explode()
