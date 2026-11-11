@@ -14,22 +14,6 @@ public class PlayerUi : MonoBehaviour
     private PlayerControls _controls;
     public static PlayerUi Instance;
 
-    private IEnumerator ShowFireCd()
-    {
-        float duration = _controls.FireCd;
-        float elapsed = 0f;
-
-        _cdFill.fillAmount = 1f;
-
-        while (elapsed < duration)
-        {
-            yield return null;
-            elapsed += Time.unscaledDeltaTime;
-            _cdFill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / duration);
-        }
-        _cdFill.fillAmount = 0f;
-    }
-
     void HealthControl()
     {
         for (int i = 0; i < Hearts.Length; i++)
@@ -43,6 +27,22 @@ public class PlayerUi : MonoBehaviour
                 Hearts[i].GetComponent<Animator>().SetBool(FullHash, false);
             }
         }
+    }
+
+    private IEnumerator ShowFireCd()
+    {
+        float duration = _controls.Fireball.Cooldown;
+        float elapsed = 0f;
+
+        _cdFill.fillAmount = 1f;
+
+        while (elapsed < duration)
+        {
+            yield return null;
+            elapsed += Time.deltaTime;
+            _cdFill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / duration);
+        }
+        _cdFill.fillAmount = 0f;
     }
 
     public void StartCD()

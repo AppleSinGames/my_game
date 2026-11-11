@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("platform"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
             return;
         }

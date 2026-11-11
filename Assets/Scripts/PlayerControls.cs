@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+
+    //----------------------------UNITY----------------------------
     private static WaitForSeconds _waitForSeconds0_2 = new (0.2f);
     public Transform SpawnPoint;
     public Rigidbody2D RgBody;
@@ -11,24 +13,27 @@ public class PlayerControls : MonoBehaviour
     public Transform Pos;
     public SpriteRenderer SpriteRenderer;
     public GameObject FireballPrefab;
+    public Vector2 CurrentFireBallPos { get; set; } 
 
+    //----------------------------STATS----------------------------
     public float HorizontalInput { get; set; }
     public float LockMove { get; set; }
     public float LockFire { get; set; }
     public float FireBallPosY { get; set; } = 1f;
     public float CurrentFireBallX { get; set; } = 1f;
-    public Vector2 CurrentFireBallPos { get; set; } 
     public static bool PlayerFlipped { get; set; }
+    public int Direction { get; set; } = 1;
 
+    //----------------------------STATS----------------------------
     public int Health { get; set; } = 1;
-    public float FireCd { get; set; } = 1.5f;
     public int Speed { get; set; } = 6;
     public float DashSpeed { get; set; } = 15;
-    public float DashCd { get; set; } = 1;
-    public float LockDash { get; set; } = 1;
     public int JumpForce { get; set; } = 8;
     public int AvailableJumps { get; set; } = 2;
-    public int Direction { get; set; } = 1;
+
+    //----------------------------CD----------------------------
+    public Cooldowns Fireball = new() { Cooldown = 1};
+    public Cooldowns Dash = new() { Cooldown = 1};
 
     void OnMove(InputValue value)
     {
@@ -44,7 +49,7 @@ public class PlayerControls : MonoBehaviour
     }
     void OnDash(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && Dash.IsReady)
         {
             LockMove = 20f;
             RgBody.gravityScale = 0;
@@ -75,10 +80,10 @@ public class PlayerControls : MonoBehaviour
 
     void OnAttack(InputValue value)
     {
-        if (value.isPressed && LockFire <= 0)
+        if (value.isPressed && Fireball.IsReady)
         {
+            Fireball.Use();
             Instantiate(FireballPrefab, CurrentFireBallPos, Quaternion.identity);
-            LockFire = FireCd;
 
             if (AudioManager.Instance != null)
             {
