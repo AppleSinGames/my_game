@@ -36,8 +36,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -444.14, y: -258.48, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4227555175245577686, guid: b6f048dddeb1b1e4c9bc40e1c77664e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,8 +192,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.010808945, y: 0.47993755}
-  m_Size: {x: 0.3652954, y: 0.7720337}
+  m_Offset: {x: -0.031661987, y: 0.9003296}
+  m_Size: {x: 0.71707153, y: 1.4338989}
   m_Direction: 0
 --- !u!70 &8740746531226707412
 CapsuleCollider2D:
@@ -229,8 +229,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0013971329, y: 0.2430296}
-  m_Size: {x: 0.34326363, y: 0.41579247}
+  m_Offset: {x: -0.04611206, y: 0.49346924}
+  m_Size: {x: 0.65930176, y: 0.7546387}
   m_Direction: 0
 --- !u!95 &9027135349173084122
 Animator:
@@ -268,10 +268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
   SpawnPoint: {fileID: 0}
   RgBody: {fileID: 4475904474512597901}
-  Player: {fileID: 1723197165334372105}
+  PlayerObj: {fileID: 1723197165334372105}
   Pos: {fileID: 6387474858488514939}
   SpriteRenderer: {fileID: 6406946316688562425}
-  FireballPrefab: {fileID: 7877709415586391485, guid: 8dfcbbfc042f65940bb84942e55cc6ff, type: 3}
+  FireballPrefab: {fileID: -2939126844394005327, guid: 8dfcbbfc042f65940bb84942e55cc6ff, type: 3}
 --- !u!114 &-274806091402571874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,4 +312,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUi
   Hearts: []
-  _cdImage: {fileID: 0}
+  _cdImage: {fileID: 1522700832388501172, guid: 33ad977ba504d6544af3caa186b8c705, type: 3}

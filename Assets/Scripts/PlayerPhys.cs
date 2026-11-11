@@ -6,12 +6,13 @@ public class PlayerPhys : MonoBehaviour
 {
     private bool _isDying = false;
     private PlayerControls _controls;
+    private Unit _player;
 
     private IEnumerator RespawnRoutine()
     {
         _isDying = true;
 
-        _controls.Health--;
+        _player.Health--;
         _controls.LockMove = 0.7f;
         _controls.HorizontalInput = 0;
 
@@ -64,5 +65,6 @@ public class PlayerPhys : MonoBehaviour
     private void Awake()
     {
         _controls = GetComponent<PlayerControls>();
+        _player = _controls.Player;
     }
 }

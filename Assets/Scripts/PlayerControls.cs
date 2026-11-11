@@ -4,35 +4,43 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
-
     //----------------------------UNITY----------------------------
     public Transform SpawnPoint;
     public Rigidbody2D RgBody;
-    public GameObject Player;
+    public GameObject PlayerObj;
     public Transform Pos;
     public SpriteRenderer SpriteRenderer;
-    public GameObject FireballPrefab;
+    public FireballScript FireballPrefab;
+    private float _fireballOffsetY = 1f;
     public Vector2 CurrentFireBallPos { get; set; } 
 
     //----------------------------STATS----------------------------
     public float HorizontalInput { get; set; }
     public float LockMove { get; set; }
-    public float LockFire { get; set; }
     public float FireBallPosY { get; set; } = 1f;
-    public float CurrentFireBallX { get; set; } = 1f;
-    public static bool PlayerFlipped { get; set; }
-    public int Direction { get; set; } = 1;
 
     //----------------------------STATS----------------------------
-    public int Health { get; set; } = 1;
-    public int Speed { get; set; } = 6;
-    public float DashSpeed { get; set; } = 15;
-    public int JumpForce { get; set; } = 8;
+    public Unit Player { get; } = new()
+    {
+        Health = 3,
+        Speed = 6,
+        DashSpeed = 15,
+        JumpForce = 8,
+        Direction = 1
+    };
+
+    public Spell Fireball { get; } = new()
+    {
+        Cooldown = 1,
+        Speed = 20,
+        Direction = 1
+    };
+
     public int AvailableJumps { get; set; } = 2;
 
-    //----------------------------CD----------------------------
-    public Cooldowns Fireball { get; } = new() { Cooldown = 1};
-    public Cooldowns Dash { get; } = new() { Cooldown = 1, Duration = 0.25f};
+    //----------------------------SPELLS----------------------------
+    public Spell Dash { get; } = new() { Cooldown = 1, Duration = 0.25f};
+    public float FireballPosY { get; private set; }
 
     void OnMove(InputValue value)
     {
@@ -61,9 +69,9 @@ public class PlayerControls : MonoBehaviour
     {
         LockMove = 20f;
         RgBody.gravityScale = 0;
-        if (Direction != 0)
+        if (Player.Direction != 0)
         {
-            RgBody.linearVelocity = new Vector2(DashSpeed * Direction, 0);
+            RgBody.linearVelocity = new Vector2(Player.DashSpeed * Player.Direction, 0);
         }
 
         yield return new WaitForSeconds(Dash.Duration);
@@ -77,7 +85,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (value.isPressed && AvailableJumps > 0 && LockMove <= 0)
         {
-            RgBody.linearVelocityY = JumpForce;
+            RgBody.linearVelocityY = Player.JumpForce;
             AvailableJumps -=1;
         }
     }
@@ -87,7 +95,10 @@ public class PlayerControls : MonoBehaviour
         if (value.isPressed && Fireball.IsReady)
         {
             Fireball.Use();
-            Instantiate(FireballPrefab, CurrentFireBallPos, Quaternion.identity);
+
+            var position = new Vector2(Pos.position.x, Pos.position.y + _fireballOffsetY);
+            var fireball = Instantiate(FireballPrefab, position, Quaternion.identity);
+            fireball.Launch(Player.Direction, Fireball.Speed);
 
             if (AudioManager.Instance != null)
             {
@@ -99,7 +110,6 @@ public class PlayerControls : MonoBehaviour
 
     private void Start()
     {
-        PlayerFlipped = false;
         Pos.position = SpawnPoint.position;
     }
 
@@ -108,27 +118,19 @@ public class PlayerControls : MonoBehaviour
         if (HorizontalInput < 0)
         {
             SpriteRenderer.flipX = true;
-            PlayerFlipped = true;
-            Direction = -1;
+            Player.Direction = -1;
         }
         else if (HorizontalInput > 0)
         {
             SpriteRenderer.flipX = false;
-            PlayerFlipped = false;
-            Direction = 1;
+            Player.Direction = 1;
         }
 
-        if (Health <= 0)
+        if (Player.Health <= 0)
         {
-            Destroy(Player);
+            Destroy(PlayerObj);
             UiControl.Instance.DeathScreen();
         }
-        if (LockFire > 0)
-        {
-            LockFire -= Time.deltaTime;
-        }
-
-        CurrentFireBallPos = new(Pos.position.x, Pos.position.y + FireBallPosY);
     }
     private void FixedUpdate()
     {
@@ -139,7 +141,7 @@ public class PlayerControls : MonoBehaviour
         }
         if (LockMove <= 0)
         {
-            RgBody.linearVelocityX = HorizontalInput * Speed;
+            RgBody.linearVelocityX = HorizontalInput * Player.Speed;
         }
     }
 }

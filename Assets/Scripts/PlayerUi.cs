@@ -6,25 +6,27 @@ public class PlayerUi : MonoBehaviour
 {
     //----------------------------HASH----------------------------
     private static readonly int FullHash = Animator.StringToHash("Full");
-    private static WaitForSeconds _waitForSeconds0_02 { get; } = new(0.02f);
+    private static WaitForSeconds WitForSeconds0_02 { get; } = new(0.02f);
 
     //----------------------------UNITY----------------------------
     [SerializeField] GameObject[] Hearts;
     [SerializeField] private GameObject _cdImage;
     private UnityEngine.UI.Image _cdFill;
 
-    private PlayerControls _controls;
+    private PlayerControls PlayerScript;
     public static PlayerUi Instance;
+    private Spell _fireball;
+    private Unit _player;
 
     void HealthControl()
     {
         for (int i = 0; i < Hearts.Length; i++)
         {
-            if (_controls.Health - 1 >= i && Hearts[i] != null)
+            if (_player.Health - 1 >= i && Hearts[i] != null)
             {
                 Hearts[i].GetComponent<Animator>().SetBool(FullHash, true);
             }
-            else if (_controls.Health - 1 < i && Hearts[i] != null)
+            else if (_player.Health - 1 < i && Hearts[i] != null)
             {
                 Hearts[i].GetComponent<Animator>().SetBool(FullHash, false);
             }
@@ -33,7 +35,7 @@ public class PlayerUi : MonoBehaviour
 
     private IEnumerator ShowFireCd()
     {
-        float duration = _controls.Fireball.Cooldown;
+        float duration = _fireball.Cooldown;
         float elapsed = 0f;
 
         _cdFill.fillAmount = 1f;
@@ -55,12 +57,14 @@ public class PlayerUi : MonoBehaviour
 
     private void Awake()
     {
-        _controls = GetComponent<PlayerControls>();
+        PlayerScript = GetComponent<PlayerControls>();
+        _fireball = PlayerScript.Fireball;
+        _player = PlayerScript.Player;
     }
 
     private void Start()
     {
-        _controls.Health = 3;
+        _player.Health = 3;
         Instance = this;
         _cdFill = _cdImage.GetComponent<UnityEngine.UI.Image>();
         _cdFill.fillAmount = 0;

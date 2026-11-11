@@ -1,14 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class ExplosionScript : MonoBehaviour
 {
-    private float _konockbackForce = 10f;
-    private static WaitForSeconds _waitForSeconds0_5 = new (0.5f);
+    [SerializeField] PlayerControls _controls;
+
+    public Spell Explosion { get; } = new()
+    {
+        Duration = 0.2f,
+        KnockbackForce = 10f
+    };
 
     private IEnumerator DestroyRoutine()
     {
-        yield return _waitForSeconds0_5;
+        yield return new WaitForSeconds(Explosion.Duration);
         Destroy(gameObject);
     }
 
@@ -20,7 +25,7 @@ public class Explosion : MonoBehaviour
         }
         else
         {
-            UnitsEnv.KnockBack(collision.rigidbody, transform.position, _konockbackForce);
+            UnitsEnv.KnockBack(collision.rigidbody, transform.position, Explosion.KnockbackForce);
         }
     }
 

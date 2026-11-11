@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.7169812, g: 0.34159416, b: 0.24012107, a: 1}
@@ -171,5 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballScript
   RgBody: {fileID: 4694508007090106223}
-  FireBall: {fileID: 7877709415586391485}
+  FireBallObj: {fileID: 7877709415586391485}
   ExplosionPrefab: {fileID: 895918010570051215, guid: e18eceb104046524bb55d963ce777a84, type: 3}
+  _playerScript: {fileID: 5014743770158778903, guid: 938fd93438c232147b2f9298fa310c92, type: 3}

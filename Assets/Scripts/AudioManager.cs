@@ -14,8 +14,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip Kill;
     public AudioClip Fireball;
 
-
-
     public static AudioManager Instance;
 
     public void PlayFireball()

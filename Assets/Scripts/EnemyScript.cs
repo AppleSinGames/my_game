@@ -10,12 +10,16 @@ public class Enemy_script : MonoBehaviour
     [SerializeField] Transform _wallCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
-    public Vector2 _selfSpawner;
 
+    public Vector2 _selfSpawner;
     //----------------------------STATS----------------------------
-    private float _speed = 5f;
-    private int _direction = 1;
-    private float _knockbackForce = 20f;
+
+    public Unit Enemy { get; } = new()
+    {
+        Speed = 5f,
+        Direction = 1,
+        KnockbackForce = 20f
+    };
 
     //----------------------------STATES----------------------------
     private float _lockMove;
@@ -31,13 +35,17 @@ public class Enemy_script : MonoBehaviour
         {
             _lockMove = 0.4f;
         }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Flip();
+        }
         if (collision.gameObject.CompareTag("Border"))
         {
             UnitsEnv.GoDown(_rgBody);
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            UnitsEnv.KnockBack(collision.rigidbody, transform.position  , _knockbackForce);
+            UnitsEnv.KnockBack(collision.rigidbody, transform.position  , Enemy.KnockbackForce);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {
@@ -65,13 +73,13 @@ public class Enemy_script : MonoBehaviour
     {
         if (_lockMove <= 0)
         {
-            _rgBody.linearVelocityX = _speed * _direction;
+            _rgBody.linearVelocityX = Enemy.Speed * Enemy.Direction;
         }
     }
 
     private void Flip()
     {
-        _direction *= -1;
+        Enemy.Direction *= -1;
 
         Vector3 scale = transform.localScale; 
         scale.x *= -1;                        
@@ -83,13 +91,13 @@ public class Enemy_script : MonoBehaviour
         _selfSpawner = transform.position;
         _rgBody.linearVelocityX = 5f;
         _isPatrolling = true;
-        _direction = 1;
+        Enemy.Direction = 1;
     }
 
     private void FixedUpdate()
     {
         bool _groundAhead = Physics2D.Raycast(_groundCheck.position, Vector2.down, _groundCheckDist, groundLayer);
-        bool _wallAhead = Physics2D.Raycast(_wallCheck.position, Vector2.right * _direction, _wallCheckDist, wallLayer);
+        bool _wallAhead = Physics2D.Raycast(_wallCheck.position, Vector2.right * Enemy.Direction, _wallCheckDist, wallLayer);
 
         if ((_groundAhead == false || _wallAhead) && _isGrounded)
         {
