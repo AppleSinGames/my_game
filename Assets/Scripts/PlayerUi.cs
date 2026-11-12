@@ -18,7 +18,7 @@ public class PlayerUi : MonoBehaviour
     private Spell _fireball;
     private Unit _player;
 
-    void HealthControl()
+    public void HealthUpdate()
     {
         for (int i = 0; i < Hearts.Length; i++)
         {
@@ -30,6 +30,7 @@ public class PlayerUi : MonoBehaviour
             {
                 Hearts[i].GetComponent<Animator>().SetBool(FullHash, false);
             }
+            Debug.Log(_player.Health);
         }
     }
 
@@ -67,10 +68,5 @@ public class PlayerUi : MonoBehaviour
         Instance = this;
         _cdFill = _cdImage.GetComponent<UnityEngine.UI.Image>();
         _cdFill.fillAmount = 0;
-    }
-
-    private void Update()
-    {
-         HealthControl();
     }
 }

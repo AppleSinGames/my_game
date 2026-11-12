@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    private static WaitForSeconds _waitForSeconds0_5 = new (0.5f);
+
     //----------------------------UNITY----------------------------
     public Transform SpawnPoint;
     public Rigidbody2D RgBody;
@@ -17,9 +19,11 @@ public class PlayerControls : MonoBehaviour
     public enum PlayerState {Dead, Knocked, Dashing, Normal}
     public PlayerState State { get; set; } = PlayerState.Normal;
     public bool CanMove => State == PlayerState.Normal;
-    public bool CanDash => State == PlayerState.Normal;
-    public bool CanJump => State == PlayerState.Normal;
-    public bool CanShoot => State == PlayerState.Normal;
+    public bool CanDash => State == PlayerState.Normal && Dash.IsReady;
+    public bool CanJump => State == PlayerState.Normal && AvailableJumps > 0;
+    public bool CanShoot => State == PlayerState.Normal && Fireball.IsReady;
+    public bool IsWalled;
+    private bool _isGrounded;
 
     //----------------------------STATS----------------------------
     public Unit Player { get; } = new()
@@ -32,6 +36,7 @@ public class PlayerControls : MonoBehaviour
         Direction = 1
     };
     public int AvailableJumps { get; set; } = 2;
+    public Vector2 WallJump = new(5, 5); 
 
     //----------------------------SPELLS----------------------------
     public Spell Dash { get; } = new()
@@ -65,7 +70,7 @@ public class PlayerControls : MonoBehaviour
 
     void OnDash(InputValue value)
     {
-        if (value.isPressed && Dash.IsReady && CanDash)
+        if (value.isPressed && CanDash)
         {
             Dash.Use();
 
@@ -89,18 +94,35 @@ public class PlayerControls : MonoBehaviour
         RgBody.gravityScale = 1;
     }
 
+    private IEnumerator WallJumpRoutine()
+    {
+        State = PlayerState.Dashing;
+        RgBody.linearVelocity = WallJump;
+
+        yield return _waitForSeconds0_5;
+        State = PlayerState.Normal;
+        RgBody.linearVelocity = Vector2.zero;
+    }
+
     void OnJump(InputValue value)
     {
-        if (value.isPressed && AvailableJumps > 0 && CanJump)
+        if (value.isPressed && CanJump)
         {
-            RgBody.linearVelocityY = Player.JumpForce;
-            AvailableJumps -=1;
+            if (IsWalled)
+            {
+                StartCoroutine(WallJumpRoutine());
+            }
+            else
+            {
+                RgBody.linearVelocityY = Player.JumpForce;
+                AvailableJumps -=1;
+            }
         }
     }
 
     void OnAttack(InputValue value)
     {
-        if (value.isPressed && Fireball.IsReady && CanShoot)
+        if (value.isPressed && CanShoot)
         {
             Fireball.Use();
 
@@ -120,6 +142,7 @@ public class PlayerControls : MonoBehaviour
     {
         Pos.position = SpawnPoint.position;
         Player.Health = Player.MaxHealth;
+        PlayerUi.Instance.HealthUpdate();
     }
 
     private void Update()

@@ -4,16 +4,16 @@ using System.Collections;
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerPhys : MonoBehaviour
 {
-    private bool _isDying = false;
     private float _knockbackDur = 0.5f;
     private PlayerControls _controls;
     private Unit _player;
 
     private IEnumerator RespawnRoutine()
     {
-        _isDying = true;
+        _controls.State = PlayerControls.PlayerState.Dead;
 
         _player.Health--;
+        PlayerUi.Instance.HealthUpdate();
         _controls.HorizontalInput = 0;
 
         _controls.RgBody.linearVelocity = Vector2.zero;
@@ -26,7 +26,7 @@ public class PlayerPhys : MonoBehaviour
         yield return new WaitForFixedUpdate();
 
         _controls.RgBody.simulated = true;
-        _isDying = false;
+        _controls.State = PlayerControls.PlayerState.Normal;
     }
 
     private IEnumerator KnockRoutine()
@@ -50,14 +50,28 @@ public class PlayerPhys : MonoBehaviour
         {
             StartCoroutine(KnockRoutine());
         }
+
         else if (collision.gameObject.CompareTag("Border"))
         {
             _controls.AvailableJumps = 1;
+            _controls.IsWalled = true;
         }
+
         else if (collision.gameObject.CompareTag("Spike"))
         {
-            if (_isDying) return;
+            if (_controls.State == PlayerControls.PlayerState.Dead)
+            {
+                return;
+            }
             StartCoroutine(RespawnRoutine());
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            UiControl.Instance.DeathScreen();
         }
     }
 
@@ -66,6 +80,10 @@ public class PlayerPhys : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform"))
         {
             _controls.AvailableJumps = 1;
+        }
+        if (collision.gameObject.CompareTag("Border"))
+        {
+            _controls.IsWalled = false;
         }
     }
 

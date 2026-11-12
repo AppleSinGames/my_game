@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Enemy_script : MonoBehaviour
 {
@@ -20,20 +21,28 @@ public class Enemy_script : MonoBehaviour
         Direction = 1,
         KnockbackForce = 20f
     };
+    private float _knockbackDur = 0.5f;
 
     //----------------------------STATES----------------------------
-    private float _lockMove;
+    private bool _stunned;
     private bool _isPatrolling;
     private bool _isGrounded;
     private float _groundCheckDist = 0.5f;
     private float _wallCheckDist = 0.5f;
+
+    private IEnumerator KnockRoutine()
+    {
+        _stunned = true;
+        yield return new WaitForSeconds(_knockbackDur);
+        _stunned = true;
+    }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Fireball"))
         {
-            _lockMove = 0.4f;
+            StartCoroutine(KnockRoutine());
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -52,6 +61,7 @@ public class Enemy_script : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
@@ -68,10 +78,9 @@ public class Enemy_script : MonoBehaviour
         }
     }
 
-
     private void Patroll()
     {
-        if (_lockMove <= 0)
+        if (!_stunned && _isGrounded)
         {
             _rgBody.linearVelocityX = Enemy.Speed * Enemy.Direction;
         }
@@ -104,12 +113,10 @@ public class Enemy_script : MonoBehaviour
             Flip();
         }
 
-        if (_isPatrolling && _lockMove <= 0)
+        if (_isPatrolling && !_stunned)
         {
             Patroll();
         }
-
-        _lockMove -= Time.fixedDeltaTime;
     }
 }
 

@@ -14,9 +14,9 @@ public class PlayerAnimationControll : MonoBehaviour
     [SerializeField] Animator _playerAnimator;
 
     //----------------------------STATES----------------------------
-    public static bool IsJumping = false;
-    public static bool IsFalling = false;
-    public static bool IsRunning = false;
+    public static bool _isJumping = false;
+    public static bool _isFalling = false;
+    public static bool _isRunning = false;
     bool IsInAir = false;
 
     private PlayerControls _controls;
@@ -33,33 +33,33 @@ public class PlayerAnimationControll : MonoBehaviour
 
         if (velocityY > verticalVelocityThreshold)
         {
-            IsJumping = true;
-            IsFalling = false;
+            _isJumping = true;
+            _isFalling = false;
         }
         else if (velocityY < -verticalVelocityThreshold)
         {
-            IsJumping = false;
-            IsFalling = true;
+            _isJumping = false;
+            _isFalling = true;
         }
         else
         {
-            IsJumping = false;
-            IsFalling = false;
+            _isJumping = false;
+            _isFalling = false;
         }
 
-        IsInAir = IsJumping || IsFalling;
+        IsInAir = _isJumping || _isFalling;
 
         if (Mathf.Abs(velocityX) > horizontalVelocityThreshold && !IsInAir)
         {
-            IsRunning = true;
+            _isRunning = true;
         }
         else
         {
-            IsRunning = false;
+            _isRunning = false;
         }
 
-        _playerAnimator.SetBool(IsJumpingHash, IsJumping);
-        _playerAnimator.SetBool(IsFallingHash, IsFalling);
-        _playerAnimator.SetBool(IsRunningHash, IsRunning);
+        _playerAnimator.SetBool(IsJumpingHash, _isJumping);
+        _playerAnimator.SetBool(IsFallingHash, _isFalling);
+        _playerAnimator.SetBool(IsRunningHash, _isRunning);
     }
 }

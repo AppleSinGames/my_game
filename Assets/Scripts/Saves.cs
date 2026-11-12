@@ -21,11 +21,11 @@ public class Saves
         return 0;
     }
 
-    public static void ChangeHighScore(int Score)
+    public static void ChangeHighScore(float Score)
     {
         if (Score > PlayerPrefs.GetInt("HighScore"))
         {
-            PlayerPrefs.SetInt("HighScore", Score);
+            PlayerPrefs.SetFloat("HighScore", Score);
         }
     }
 
