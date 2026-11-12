@@ -64,7 +64,6 @@ public class PlayerUi : MonoBehaviour
 
     private void Start()
     {
-        _player.Health = 3;
         Instance = this;
         _cdFill = _cdImage.GetComponent<UnityEngine.UI.Image>();
         _cdFill.fillAmount = 0;

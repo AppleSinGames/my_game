@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerPhys : MonoBehaviour
 {
     private bool _isDying = false;
+    private float _knockbackDur = 0.5f;
     private PlayerControls _controls;
     private Unit _player;
 
@@ -13,7 +14,6 @@ public class PlayerPhys : MonoBehaviour
         _isDying = true;
 
         _player.Health--;
-        _controls.LockMove = 0.7f;
         _controls.HorizontalInput = 0;
 
         _controls.RgBody.linearVelocity = Vector2.zero;
@@ -29,6 +29,13 @@ public class PlayerPhys : MonoBehaviour
         _isDying = false;
     }
 
+    private IEnumerator KnockRoutine()
+    {
+        _controls.State = PlayerControls.PlayerState.Knocked;
+        yield return new WaitForSeconds(_knockbackDur);
+        _controls.State = PlayerControls.PlayerState.Normal;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -41,7 +48,7 @@ public class PlayerPhys : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
-            _controls.LockMove = 0.4f;
+            StartCoroutine(KnockRoutine());
         }
         else if (collision.gameObject.CompareTag("Border"))
         {

@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ExplosionScript : MonoBehaviour
 {
-    [SerializeField] PlayerControls _controls;
-
     public Spell Explosion { get; } = new()
     {
         Duration = 0.2f,

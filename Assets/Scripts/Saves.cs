@@ -36,7 +36,7 @@ public class Saves
             return PlayerPrefs.GetFloat("Music");
         }
 
-        return 0;
+        return 0.2f;
     }
     public static float ChangeSFXVolume()
     {
@@ -45,6 +45,6 @@ public class Saves
             return PlayerPrefs.GetFloat("SFX");
         }
 
-        return 0;
+        return 0.2f;
     }
 }

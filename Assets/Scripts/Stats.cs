@@ -20,6 +20,7 @@ public class Spell
 public class Unit 
 {
     public int Health;
+    public int MaxHealth;
     public float Speed;
     public float DashSpeed;
     public float JumpForce;
