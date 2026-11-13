@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerUi : MonoBehaviour 
@@ -10,12 +11,13 @@ public class PlayerUi : MonoBehaviour
 
     //----------------------------UNITY----------------------------
     [SerializeField] GameObject[] Hearts;
-    [SerializeField] private GameObject _cdImage;
-    private UnityEngine.UI.Image _cdFill;
+    [SerializeField] private UnityEngine.UI.Image _fireballCD;
+    [SerializeField] private UnityEngine.UI.Image _dashCD;
 
     private PlayerControls PlayerScript;
     public static PlayerUi Instance;
     private Spell _fireball;
+    private Spell _dash;
     private Unit _player;
 
     public void HealthUpdate()
@@ -34,39 +36,42 @@ public class PlayerUi : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowFireCd()
+    private static IEnumerator ShowCd(Image fill, float cooldown)
     {
-        float duration = _fireball.Cooldown;
         float elapsed = 0f;
 
-        _cdFill.fillAmount = 1f;
+        fill.fillAmount = 1f;
 
-        while (elapsed < duration)
+        while (elapsed < cooldown)
         {
             yield return null;
             elapsed += Time.deltaTime;
-            _cdFill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / duration);
+            fill.fillAmount = Mathf.Lerp(1f, 0f, elapsed / cooldown);
         }
-        _cdFill.fillAmount = 0f;
+        fill.fillAmount = 0f;
     }
 
-    public void StartCD()
+    public void Fireball()
     {
-        _cdFill.fillAmount = 1;
-        StartCoroutine(ShowFireCd());
+        StartCoroutine(ShowCd(_fireballCD, _fireball.Cooldown));
+    }
+    public void Dash()
+    {
+        StartCoroutine(ShowCd(_dashCD, _dash.Cooldown));
     }
 
     private void Awake()
     {
         PlayerScript = GetComponent<PlayerControls>();
         _fireball = PlayerScript.Fireball;
+        _dash = PlayerScript.Dash;
         _player = PlayerScript.Player;
     }
 
     private void Start()
     {
         Instance = this;
-        _cdFill = _cdImage.GetComponent<UnityEngine.UI.Image>();
-        _cdFill.fillAmount = 0;
+        _fireballCD.fillAmount = 0;
+        _dashCD.fillAmount = 0;
     }
 }

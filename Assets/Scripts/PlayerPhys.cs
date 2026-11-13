@@ -54,7 +54,7 @@ public class PlayerPhys : MonoBehaviour
         else if (collision.gameObject.CompareTag("Border"))
         {
             _controls.AvailableJumps = 1;
-            _controls.IsWalled = true;
+            _controls.State = PlayerControls.PlayerState.OnWall;
         }
 
         else if (collision.gameObject.CompareTag("Spike"))
@@ -75,6 +75,20 @@ public class PlayerPhys : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Border"))
+        {
+            if (_controls.State != PlayerControls.PlayerState.Dashing)
+            { 
+                _controls.RgBody.linearVelocity = Vector3.zero;
+
+                _controls.State = PlayerControls.PlayerState.OnWall;
+                _controls.RgBody.gravityScale = 0;
+            }
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
@@ -83,7 +97,7 @@ public class PlayerPhys : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            _controls.IsWalled = false;
+            _controls.RgBody.gravityScale = 1;
         }
     }
 

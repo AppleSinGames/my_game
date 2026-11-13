@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 54afc842b60ef7c468d7de6a69a92efb
+guid: c6e7dccb7ae1ed54f9b0a46d0fac2cab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7088732739166750582
-    second: heartHollow_0
+      213: -8234536430552275792
+    second: door2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heartHollow_0
+      name: door2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 74
-        width: 1126
-        height: 977
+        x: 1
+        y: 0
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67747b95edc306260800000000000000
-      internalID: 7088732739166750582
+      spriteID: 0b42beeaebc09bd80800000000000000
+      internalID: -8234536430552275792
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      heartHollow_0: 7088732739166750582
+      door2_0: -8234536430552275792
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

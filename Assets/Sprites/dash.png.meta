@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4502f94bda4827e4e8aab9790dab27a3
+guid: cacea065a7f03ec40a8da02bcac8f0e8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5353841184698615464
-    second: fireball_0
+      213: 7110878671101974141
+    second: dash_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fireball_0
+      name: dash_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 33
-        width: 853
-        height: 842
+        x: 0
+        y: 0
+        width: 16
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a641dd013aac4a40800000000000000
-      internalID: 5353841184698615464
+      spriteID: d765fefe97aeea260800000000000000
+      internalID: 7110878671101974141
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fireball_0: 5353841184698615464
+      dash_0: 7110878671101974141
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

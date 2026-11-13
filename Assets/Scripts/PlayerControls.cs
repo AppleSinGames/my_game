@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,13 +17,12 @@ public class PlayerControls : MonoBehaviour
 
     //----------------------------STATES----------------------------
     public float HorizontalInput { get; set; }
-    public enum PlayerState {Dead, Knocked, Dashing, Normal}
+    public enum PlayerState {Dead, Knocked, Dashing, Normal, OnWall}
     public PlayerState State { get; set; } = PlayerState.Normal;
     public bool CanMove => State == PlayerState.Normal;
-    public bool CanDash => State == PlayerState.Normal && Dash.IsReady;
-    public bool CanJump => State == PlayerState.Normal && AvailableJumps > 0;
+    public bool CanDash => State != PlayerState.Dead && Dash.IsReady;
+    public bool CanJump => (State != PlayerState.Dead || State != PlayerState.Knocked) && AvailableJumps > 0;
     public bool CanShoot => State == PlayerState.Normal && Fireball.IsReady;
-    public bool IsWalled;
     private bool _isGrounded;
 
     //----------------------------STATS----------------------------
@@ -75,6 +75,7 @@ public class PlayerControls : MonoBehaviour
             Dash.Use();
 
             StartCoroutine(DashRoutine());
+            PlayerUi.Instance.Dash();
         }
     }
 
@@ -108,7 +109,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (value.isPressed && CanJump)
         {
-            if (IsWalled)
+            if (State == PlayerState.OnWall)
             {
                 StartCoroutine(WallJumpRoutine());
             }
@@ -134,7 +135,7 @@ public class PlayerControls : MonoBehaviour
             {
                 AudioManager.Instance.PlayFireball();
             }
-            PlayerUi.Instance.StartCD();
+            PlayerUi.Instance.Fireball();
         }
     }
 
