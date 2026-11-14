@@ -51,17 +51,17 @@ public class UiControl : MonoBehaviour
 
     public void DeathScreen()
     {
-        Time.timeScale = 0f;
         PlayerUi.SetActive(false);
         Death.SetActive(true);
         Saves.ChangeHighScore(PlayerUiControl.Score);
+        Time.timeScale = 0f;
     }
     public void WinScreen()
     {
-        Time.timeScale = 0f;
-        Win.SetActive(true);
         PlayerUi.SetActive(false);
         Saves.ChangeHighScore(PlayerUiControl.Score);
+        Win.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     private void Awake()

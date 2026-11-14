@@ -47,10 +47,7 @@ public class PlayerPhys : MonoBehaviour
                 _controls.AvailableJumps = 2;
             }
         }
-        else if (collision.gameObject.CompareTag("Border"))
-        {
-                _controls.AvailableJumps = 1;
-        }
+     
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
             StartCoroutine(KnockRoutine());
@@ -99,6 +96,7 @@ public class PlayerPhys : MonoBehaviour
 
                 _controls.State = PlayerControls.PlayerState.OnWall;
                 _controls.RgBody.gravityScale = 0;
+                _controls.AvailableJumps = 1;
             }
         }
         if (collision.gameObject.CompareTag("Platform"))

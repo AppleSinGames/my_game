@@ -92,8 +92,6 @@ public class PlayerUiControl : MonoBehaviour
         {
             _highScoreText.text = _highScore.ToString();
         }
-
-
     }
 
 }

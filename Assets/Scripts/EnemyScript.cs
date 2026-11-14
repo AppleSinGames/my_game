@@ -19,7 +19,7 @@ public class Enemy_script : MonoBehaviour
     {
         Speed = 5f,
         Direction = 1,
-        KnockbackForce = 5f
+        KnockbackForce = 10f
     };
     private float _knockbackDur = 0.5f;
 
@@ -63,7 +63,11 @@ public class Enemy_script : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
-            _isGrounded = true;
+            Vector2 normal = collision.GetContact(0).normal;
+            if (normal.y > 0.5f)
+            {
+                _isGrounded = true;
+            }
         }
     }
 
