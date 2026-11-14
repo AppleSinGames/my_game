@@ -66,6 +66,14 @@ public class PlayerUiControl : MonoBehaviour
         StartCoroutine(ShowCd(_dashCD, _dash.Cooldown));
     }
 
+    public void UpdateScore()
+    {
+        if (ScoreText != null)
+        {
+            ScoreText.text = Score.ToString();
+        }
+    }
+
     private void Awake()
     {
         PlayerScript = GetComponent<PlayerControls>();
@@ -84,10 +92,8 @@ public class PlayerUiControl : MonoBehaviour
         _highScore = Saves.SetHighScore();
         Score = 0;
 
-        if (ScoreText != null)
-        {
-            ScoreText.text = Score.ToString();
-        }
+        UpdateScore();
+
         if (_highScoreText != null)
         {
             _highScoreText.text = _highScore.ToString();

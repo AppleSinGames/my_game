@@ -56,6 +56,7 @@ public class Enemy_script : MonoBehaviour
         {
             Destroy(gameObject);
             PlayerUiControl.Score += 1;
+            PlayerUiControl.Instance.UpdateScore();
         }
     }
 
