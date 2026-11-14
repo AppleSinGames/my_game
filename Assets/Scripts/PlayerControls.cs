@@ -23,7 +23,7 @@ public class PlayerControls : MonoBehaviour
     public bool CanDash => State != PlayerState.Dead && Dash.IsReady;
     public bool CanJump => (State != PlayerState.Dead || State != PlayerState.Knocked) && AvailableJumps > 0;
     public bool CanShoot => State == PlayerState.Normal && Fireball.IsReady;
-    private bool _isGrounded;
+    public bool IsGrounded;
 
     //----------------------------STATS----------------------------
     public Unit Player { get; } = new()
@@ -75,7 +75,7 @@ public class PlayerControls : MonoBehaviour
             Dash.Use();
 
             StartCoroutine(DashRoutine());
-            PlayerUi.Instance.Dash();
+            PlayerUiControl.Instance.Dash();
         }
     }
 
@@ -98,7 +98,7 @@ public class PlayerControls : MonoBehaviour
     private IEnumerator WallJumpRoutine()
     {
         State = PlayerState.Dashing;
-        RgBody.linearVelocity = WallJump;
+        RgBody.linearVelocity = new (WallJump.x * Player.Direction, WallJump.y);
 
         yield return _waitForSeconds0_5;
         State = PlayerState.Normal;
@@ -135,7 +135,7 @@ public class PlayerControls : MonoBehaviour
             {
                 AudioManager.Instance.PlayFireball();
             }
-            PlayerUi.Instance.Fireball();
+            PlayerUiControl.Instance.Fireball();
         }
     }
 
@@ -143,20 +143,25 @@ public class PlayerControls : MonoBehaviour
     {
         Pos.position = SpawnPoint.position;
         Player.Health = Player.MaxHealth;
-        PlayerUi.Instance.HealthUpdate();
     }
 
     private void Update()
     {
         if (HorizontalInput < 0)
         {
-            SpriteRenderer.flipX = true;
             Player.Direction = -1;
         }
         else if (HorizontalInput > 0)
         {
-            SpriteRenderer.flipX = false;
             Player.Direction = 1;
+        }
+        if (Player.Direction == 1)
+        {
+            SpriteRenderer.flipX = false;
+        }
+        else if (Player.Direction == -1)
+        {
+            SpriteRenderer.flipX = true;
         }
 
         if (Player.Health <= 0)

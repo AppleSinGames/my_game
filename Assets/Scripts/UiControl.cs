@@ -5,15 +5,13 @@ using UnityEngine.SceneManagement;
 public class UiControl : MonoBehaviour
 {
     [Header("___________TEXT___________")]
-    [SerializeField] TMP_Text ScoreText;
-    [SerializeField] TMP_Text _highScoreText;
+
     [Header("___________OBJS___________")]
     [SerializeField] GameObject Death;
+    [SerializeField] GameObject Win;
     [SerializeField] GameObject PausePanel;
     [SerializeField] GameObject OptionsPanel;
-
-    public static int Score;
-    public int _highScore;
+    [SerializeField] GameObject PlayerUi;
 
     public static UiControl Instance;
 
@@ -53,8 +51,17 @@ public class UiControl : MonoBehaviour
 
     public void DeathScreen()
     {
+        Time.timeScale = 0f;
+        PlayerUi.SetActive(false);
         Death.SetActive(true);
-        Saves.ChangeHighScore(Score);
+        Saves.ChangeHighScore(PlayerUiControl.Score);
+    }
+    public void WinScreen()
+    {
+        Time.timeScale = 0f;
+        Win.SetActive(true);
+        PlayerUi.SetActive(false);
+        Saves.ChangeHighScore(PlayerUiControl.Score);
     }
 
     private void Awake()
@@ -71,28 +78,11 @@ public class UiControl : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
-
         else 
         {
             PausePanel.SetActive(false);
             Death.SetActive(false);
-            Score = 0;
             Time.timeScale = 1f;
-
-            _highScore = Saves.SetHighScore();
-
-            if (_highScoreText != null)
-            {
-                _highScoreText.text = _highScore.ToString();
-            }
-        }
-    }
-
-    void Update()
-    {
-        if (ScoreText != null)
-        {
-            ScoreText.text = Score.ToString();
         }
     }
 }

@@ -1,9 +1,11 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerControls))]
-public class PlayerUi : MonoBehaviour 
+public class PlayerUiControl : MonoBehaviour 
 {
     //----------------------------HASH----------------------------
     private static readonly int FullHash = Animator.StringToHash("Full");
@@ -14,11 +16,16 @@ public class PlayerUi : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image _fireballCD;
     [SerializeField] private UnityEngine.UI.Image _dashCD;
 
+    [SerializeField] TMP_Text ScoreText;
+    [SerializeField] TMP_Text _highScoreText;
+
     private PlayerControls PlayerScript;
-    public static PlayerUi Instance;
+    public static PlayerUiControl Instance;
     private Spell _fireball;
     private Spell _dash;
     private Unit _player;
+    public static int Score;
+    public int _highScore;
 
     public void HealthUpdate()
     {
@@ -32,14 +39,13 @@ public class PlayerUi : MonoBehaviour
             {
                 Hearts[i].GetComponent<Animator>().SetBool(FullHash, false);
             }
-            Debug.Log(_player.Health);
         }
     }
 
     private static IEnumerator ShowCd(Image fill, float cooldown)
     {
         float elapsed = 0f;
-
+            
         fill.fillAmount = 1f;
 
         while (elapsed < cooldown)
@@ -73,5 +79,21 @@ public class PlayerUi : MonoBehaviour
         Instance = this;
         _fireballCD.fillAmount = 0;
         _dashCD.fillAmount = 0;
+        HealthUpdate();
+
+        _highScore = Saves.SetHighScore();
+        Score = 0;
+
+        if (ScoreText != null)
+        {
+            ScoreText.text = Score.ToString();
+        }
+        if (_highScoreText != null)
+        {
+            _highScoreText.text = _highScore.ToString();
+        }
+
+
     }
+
 }

@@ -19,7 +19,7 @@ public class Enemy_script : MonoBehaviour
     {
         Speed = 5f,
         Direction = 1,
-        KnockbackForce = 20f
+        KnockbackForce = 5f
     };
     private float _knockbackDur = 0.5f;
 
@@ -34,7 +34,7 @@ public class Enemy_script : MonoBehaviour
     {
         _stunned = true;
         yield return new WaitForSeconds(_knockbackDur);
-        _stunned = true;
+        _stunned = false;
     }
 
 
@@ -48,17 +48,14 @@ public class Enemy_script : MonoBehaviour
         {
             Flip();
         }
-        if (collision.gameObject.CompareTag("Border"))
-        {
-            UnitsEnv.GoDown(_rgBody);
-        }
         if (collision.gameObject.CompareTag("Player"))
         {
-            UnitsEnv.KnockBack(collision.rigidbody, transform.position  , Enemy.KnockbackForce);
+            UnitsEnv.KnockBack(collision.rigidbody, transform.position, Enemy.KnockbackForce);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {
             Destroy(gameObject);
+            PlayerUiControl.Score += 1;
         }
     }
 

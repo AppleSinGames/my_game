@@ -6,7 +6,7 @@ public class ExplosionScript : MonoBehaviour
     public Spell Explosion { get; } = new()
     {
         Duration = 0.2f,
-        KnockbackForce = 10f
+        KnockbackForce = 5f
     };
 
     private IEnumerator DestroyRoutine()

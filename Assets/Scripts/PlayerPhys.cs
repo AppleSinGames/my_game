@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static Unity.U2D.Physics.PhysicsShape;
 
 [RequireComponent(typeof(PlayerControls))]
 public class PlayerPhys : MonoBehaviour
@@ -13,7 +14,7 @@ public class PlayerPhys : MonoBehaviour
         _controls.State = PlayerControls.PlayerState.Dead;
 
         _player.Health--;
-        PlayerUi.Instance.HealthUpdate();
+        PlayerUiControl.Instance.HealthUpdate();
         _controls.HorizontalInput = 0;
 
         _controls.RgBody.linearVelocity = Vector2.zero;
@@ -46,15 +47,13 @@ public class PlayerPhys : MonoBehaviour
                 _controls.AvailableJumps = 2;
             }
         }
+        else if (collision.gameObject.CompareTag("Border"))
+        {
+                _controls.AvailableJumps = 1;
+        }
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Fireball"))
         {
             StartCoroutine(KnockRoutine());
-        }
-
-        else if (collision.gameObject.CompareTag("Border"))
-        {
-            _controls.AvailableJumps = 1;
-            _controls.State = PlayerControls.PlayerState.OnWall;
         }
 
         else if (collision.gameObject.CompareTag("Spike"))
@@ -64,6 +63,7 @@ public class PlayerPhys : MonoBehaviour
                 return;
             }
             StartCoroutine(RespawnRoutine());
+            PlayerUiControl.Instance.HealthUpdate();
         }
     }
 
@@ -71,21 +71,39 @@ public class PlayerPhys : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-            UiControl.Instance.DeathScreen();
+            UiControl.Instance.WinScreen();
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Border"))
+        if (collision.gameObject.CompareTag("Border") && !_controls.IsGrounded)
         {
+            Vector2 normal = collision.GetContact(0).normal;
+            if (normal.y > 0.5f || normal.y < -0.5f)
+            {
+                return;
+            }
+
             if (_controls.State != PlayerControls.PlayerState.Dashing)
-            { 
+            {
+                if (normal.x > 0.5f) 
+                {
+                    _player.Direction = 1;
+                }
+                else if (normal.x < -0.5f) 
+                {
+                    _player.Direction = -1;
+                }
                 _controls.RgBody.linearVelocity = Vector3.zero;
 
                 _controls.State = PlayerControls.PlayerState.OnWall;
                 _controls.RgBody.gravityScale = 0;
             }
+        }
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            _controls.IsGrounded = true;
         }
     }
 
@@ -94,10 +112,15 @@ public class PlayerPhys : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform"))
         {
             _controls.AvailableJumps = 1;
+            _controls.IsGrounded = false;
         }
         if (collision.gameObject.CompareTag("Border"))
         {
             _controls.RgBody.gravityScale = 1;
+            if (_controls.State == PlayerControls.PlayerState.OnWall)
+            {
+                _controls.State = PlayerControls.PlayerState.Normal;
+            }
         }
     }
 
